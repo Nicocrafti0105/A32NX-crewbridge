@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="translate">A32NX cobridger</title>
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <div id="container">
+        <nav>
+            <div id="logo">
+                <img src="/assets/logo.png">
+            </div>
+
+            <!-- TOP NAV -->
+            <div class="nav-top">
+
+                <!-- HOME -->
+                <div onclick="window.location.href='/'" class="translate nav btn b1 <%= activePage === 'home' ? 'active' : '' %> ">
+                    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                        <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
+                            <g transform="translate(-26, -15)">
+                                <g transform="translate(26, 15)">
+                                    <rect fill="#FFFFFF" fill-opacity="0.01" width="24" height="24"></rect>
+                                    <polygon points="4.5 9 4.5 21 19.5 21 19.5 9 12 3"></polygon>
+                                    <polygon stroke="#212121" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        points="4.5 21 4.5 9 2 11 12 3 22 11 19.5 9 19.5 21"></polygon>
+                                    <polygon stroke="#212121" stroke-linejoin="round" stroke-width="1.5"
+                                        points="9.5 14.5 9.5 21 14.5 21 14.5 14.5"></polygon>
+                                    <line stroke="#212121" stroke-linecap="round" stroke-width="1.5"
+                                        x1="4.5" y1="21" x2="19.5" y2="21"></line>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                    <a>Home</a>
+                </div>
+
+                <!-- CONSOLE -->
+                <div onclick="window.location.href='/console'" class="translate nav btn b2 <%= activePage === 'console' ? 'active' : '' %>">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M10 17L8 15L10 13M14 13L16 15L14 17M13 3H8.2C7.0799 3 6.51984 3 6.09202 3.21799C5.71569 3.40973 5.40973 3.71569 5.21799 4.09202C5 4.51984 5 5.0799 5 6.2V17.8C5 18.9201 5 19.4802 5.21799 19.908C5.40973 20.2843 5.71569 20.5903 6.09202 20.782C6.51984 21 7.0799 21 8.2 21H15.8C16.9201 21 17.4802 21 17.908 20.782C18.2843 20.5903 18.5903 20.2843 18.782 19.908C19 19.4802 19 18.9201 19 17.8V9M13 3L19 9M13 3V8C13 8.55228 13.4477 9 14 9H19"
+                            stroke="#000" stroke-width="1.248" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <a>Console</a>
+                </div>
+
+            </div>
+
+            <!-- BOTTOM NAV -->
+            <div class="nav-bottom">
+
+                <!-- GITHUB -->
+                <div onclick="window.location.href='/'" class="translate nav btn b3">
+                    <svg width="188px" height="188px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>github [#142]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-140.000000, -7559.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399" id="github-[#142]"> </path> </g> </g> </g> </g></svg>
+                    <a>Github</a>
+                </div>
+
+                <!-- SETTINGS -->
+                <div onclick="window.location.href='/settings'" class="translate nav btn b4 <%= activePage === 'settings' ? 'active' : '' %>">
+                    <svg width="204px" height="204px" viewBox="0 0 24 24" fill="#000000">
+                        <g fill="none" stroke-width="1.416">
+                            <path d="M9.14 21.586C7.466 21.087 5.975 20.161 4.794 18.933C5.234 18.411 5.5 17.737 5.5 17C5.5 15.343 4.157 14 2.5 14C2.4 14 2.301 14.005 2.203 14.014C2.07 13.364 2 12.69 2 12C2 10.955 2.16 9.947 2.458 8.999C4.157 9 5.5 7.657 5.5 6C5.5 5.524 5.389 5.074 5.192 4.675C6.349 3.6 7.76 2.795 9.326 2.362C9.822 3.334 10.833 4 12 4C13.167 4 14.178 3.334 14.674 2.362C16.24 2.795 17.651 3.6 18.808 4.675C18.611 5.075 18.5 5.524 18.5 6C18.5 7.657 19.843 9 21.5 9C21.84 9.947 22 10.955 22 12C22 12.69 21.93 13.364 21.797 14.014C21.699 14.005 21.6 14 21.5 14C19.843 14 18.5 15.343 18.5 17C18.5 17.737 18.766 18.411 19.206 18.933C18.025 20.161 16.534 21.087 14.858 21.586C14.471 20.376 13.338 19.5 12 19.5C10.662 19.5 9.529 20.376 9.142 21.586Z"
+                                stroke="#212121" stroke-linejoin="round">
+                            </path>
+                            <path d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z"
+                                stroke="#212121" stroke-linejoin="round">
+                            </path>
+                        </g>
+                    </svg>
+                    <a>Settings</a>
+                </div>
+
+            </div>
+
+        </nav>
+
+        <div id="canvas">
+
+        </div>
+    </div>
+</body>
+</html>
