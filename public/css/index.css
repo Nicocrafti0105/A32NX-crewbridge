@@ -1,23 +1,77 @@
 :root {
-    --black : hsl(240, 9%, 5%);
-    --black-200 : hsl(240,9%,20%);
-    --grey-100ts : hsla(240,9%,65%,10%);
-    --grey-150ts : hsla(240,9%,45%,11%);
-    --grey-200ts : hsla(240,9%,40%,10%);
+    --black: hsl(240, 9%, 5%);
+    --black-100: hsl(240, 9%, 10%);
+    --black-200: hsl(240, 9%, 20%);
+    --black-300: hsl(240, 9%, 30%);
+    --black-400: hsl(240, 9%, 40%);
 
-    --white: hsla(0, 0%, 100%,100%);
-    --white-100 : hsla(0,0%,98%,100%);
-    --white-200 : hsla(0,0%,94%,100%);
-    --font : monospace , Arial;
-    --padd-10 : 3rem ;
-    --padd-5 : 1rem ;
-    --padd-1 : 0.5rem ;
+
+    --grey-50: hsl(240, 9%, 95%);
+    --grey-100: hsl(240, 9%, 85%);
+    --grey-100ts: hsla(240, 9%, 65%, 0.1);
+    --grey-150ts: hsla(240, 9%, 45%, 0.11);
+    --grey-200: hsl(240, 9%, 30%);
+    --grey-200ts: hsla(240, 9%, 40%, 0.1);
+    --grey-300: hsl(240, 9%, 20%);
+    --grey-400: hsl(240, 9%, 15%);
+
+
+    --white: hsl(0, 0%, 100%);
+    --white-100: hsl(0, 0%, 98%);
+    --white-200: hsl(0, 0%, 94%);
+    --white-300: hsl(0, 0%, 90%);
+    --white-400: hsl(0, 0%, 85%);
+
+
+    --blue: hsl(210, 80%, 55%);
+    --blue-dark: hsl(210, 80%, 40%);
+    --red: hsl(0, 70%, 55%);
+    --green: hsl(120, 60%, 45%);
+
+
+    --font: monospace, Arial;
+    --padd-10: 3rem;
+    --padd-5: 1rem;
+    --padd-1: 0.5rem;
+}
+
+.darkmode {
+    --black: hsl(240, 9%, 95%);
+    --black-100: hsl(240, 9%, 90%);
+    --black-200: hsl(240, 9%, 80%);
+    --black-300: hsl(240, 9%, 70%);
+    --black-400: hsl(240, 9%, 60%);
+
+    --grey-50: hsl(240, 9%, 20%);
+    --grey-100: hsl(240, 9%, 25%);
+    --grey-100ts: hsla(240, 9%, 35%, 0.1);
+    --grey-150ts: hsla(240, 9%, 45%, 0.12);
+    --grey-200: hsl(240, 9%, 50%);
+    --grey-200ts: hsla(240, 9%, 55%, 0.1);
+    --grey-300: hsl(240, 9%, 60%);
+    --grey-400: hsl(240, 9%, 70%);
+
+    --white: hsl(0, 0%, 10%);
+    --white-100: hsl(0, 0%, 15%);
+    --white-200: hsl(0, 0%, 20%);
+    --white-300: hsl(0, 0%, 25%);
+    --white-400: hsl(0, 0%, 30%);
+
+    --blue: hsl(210, 80%, 65%);
+    --blue-dark: hsl(210, 80%, 50%);
+    --red: hsl(0, 70%, 65%);
+    --green: hsl(120, 60%, 55%);
+}
+
+* {
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, filter 0.3s, stroke 0.3s , fill 0.3s;
 }
 
 body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: var(--font);
 }
 
 #container {
@@ -66,18 +120,21 @@ nav .btn {
     border-radius: 0.5rem;
     margin: 0 0.5rem;
     cursor: pointer;
-    transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out, scale 0.1s ease-in-out;
 
     display: grid;
     align-items: center;
     grid-template-columns: 30px 1fr;
-
+    user-select: none;
 }
 
 nav .btn:hover {
     background-color:var(--grey-150ts) ;
 }
 
+nav .btn:active {
+    scale: 0.98;
+}
 
 nav .btn a {
     font-weight: 300;
@@ -114,7 +171,136 @@ nav svg {
     width: 24px;
 }
 
+#modebtn {
+    width: auto ;
+    padding:8px;
+    border-radius: 0.5rem;
+    margin: 0 0.5rem;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 30px 1fr;
+}
 
-h1 {
-    color: var(--white);
+#modebtn span {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+#modebtn svg {
+    height: 24px;
+    margin-right: 9px;
+    width: 24px;
+    scale: 1.2;
+}
+
+#modebtn svg:first-child {
+    display: none;
+}
+
+.darkmode #modebtn svg:first-child {
+    display: block;
+}
+
+.darkmode #modebtn svg:last-child {
+    display: none;
+}
+
+
+
+.darkmode svg {
+    stroke: white;
+    color: white;
+    border-color: white;
+    filter: invert(1);
+}
+
+.darkmode #logo img {
+    filter: invert(1) brightness(2);
+}
+
+
+#settings {
+    background-color: var(--white-200);
+    border: solid 3px var(--grey-100ts);
+    border-radius: var(--padd-5);
+    padding: var(--padd-5);
+    height: 70%;
+    width: 45%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-30%, -50%);
+    z-index: 20;
+    opacity: 0;
+    overflow-y: auto;
+    transition: 0.5s ease-in-out;
+
+    display: grid;
+    grid-template-rows: 1.5fr 6fr 1fr;
+    color: var(--black);
+}
+
+#overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+}
+ 
+.settings-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid var(--grey-100ts);
+    padding-bottom: var(--padd-1);
+}
+ 
+.settings-middle {
+    padding: var(--padd-1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-color: rgba(0,0,0,0);
+    gap: 1rem;
+}
+
+.settings-bottom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-top: 2px solid var(--grey-100ts);
+    padding-top: var(--padd-1);
+}
+
+
+#saveSettings {
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--black);
+    background-color: var(--white-300);
+    padding: var(--padd-1) var(--padd-5);
+    margin-top: 1%;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.3s ease-in-out, scale 0.1s ease-in-out;
+}
+
+#saveSettings:hover {
+    background-color: var(--white-400);
+    scale: 1.03;
+}
+
+#saveSettings:active {
+    scale: 0.97;
 }
