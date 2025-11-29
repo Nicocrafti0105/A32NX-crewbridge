@@ -54,7 +54,8 @@ nav {
 }
 
 .nav-bottom {
-    margin-top: 165%;
+    margin-top: auto;
+    margin-bottom: var(--padd-5);
 }
 
 
