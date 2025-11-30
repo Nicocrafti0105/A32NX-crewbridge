@@ -621,6 +621,7 @@ nav svg {
 
 
 /*====================== CONNECTION BOX ======================*/
+
 .connection-box {
     display: flex;
     justify-content: center;
@@ -634,13 +635,8 @@ nav svg {
     border-radius: 1rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(10px);
-    transition: all 0.3s ease-in-out;
 }
 
-.connection-box:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-}
 
 .connection-box form {
     display: grid;
@@ -685,23 +681,3 @@ nav svg {
     transform: translateY(1px);
 }
 
-/*====================== DARK MODE ======================*/
-.darkmode .connection-box {
-    background: linear-gradient(135deg, var(--white-200), var(--white-300));
-    border-color: var(--grey-200ts);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-.darkmode .connection-box input {
-    background-color: var(--white-200);
-    color: var(--black-100);
-    border-color: var(--grey-200ts);
-}
-
-.darkmode .connection-box input:focus {
-    box-shadow: 0 0 8px var(--blue);
-}
-
-.darkmode .connection-box button {
-    background: linear-gradient(90deg, var(--blue), var(--blue-dark));
-}
