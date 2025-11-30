@@ -197,3 +197,7 @@ function toast(title, text, level = 2, time = 3000) {
         toastEl.classList.remove('show');
     }, time);
 }
+
+
+let port = localStorage.getItem('port') || '0000';
+document.getElementById('list-port').textContent = port;

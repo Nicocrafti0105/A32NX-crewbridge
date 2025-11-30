@@ -90,16 +90,24 @@ setInterval(async () => {
     console.log("Updated IP:", currentStatus.ip);
 }, 5000);
 
+
 app.get('/', (req,res) => {
     res.render('index', {
         hostname,
         localip: currentStatus.ip,
         mfsVersion,
-        port : "0000"
     });
 });
 
 
 app.get("/status", (req, res) => {
     res.json(currentStatus);
+});
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.post('/connect', (req, res) => {
+    console.log('Received /connect form data:', req.body);
+    res.sendStatus(200);
 });

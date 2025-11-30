@@ -99,7 +99,7 @@
                 <div id="client">
                     <div id="client-box">
                         <div class="title"><h1>Client</h1></div>
-                        <div class="client-info">
+                        <div class="dash-box">
                             <h4>Infos</h4>
                             <div class="info-col1">
                                 <p>Name : <span><%= hostname %></span></p>
@@ -109,25 +109,17 @@
                             <div class="info-coll2">
                                 <p>Status : <span id="clientst" class="status">Not connected</span></p>
                                 <p>Connected to : <span id="host-target">None</span></p>
-                                <p>Listening on port : <span id="list-port"> <%= port %></span></p>
+                                <p>Listening on port : <span id="list-port"></span></p>
                             
                             </div>
                         </div>
                     </div>
-                    <div id="client-box">
-                        <div class="client-info">
-                            <h4>Infos</h4>
-                            <div class="info-col1">
-                                <p>Name : <span><%= hostname %></span></p>
-                                <p>Your ip : <span class="localIp <%= localip === 'Connection error' ? 'no-blur' : 'blurrable' %>"><%= localip%></span></p>
-                                <p>Using mfs : <span><%= mfsVersion %></span></p>
-                            </div>
-                            <div class="info-coll2">
-                                <p>Status : <span id="clientst" class="status">Not connected</span></p>
-                                <p>Connected to : <span id="host-target">None</span></p>
-                                <p>Listening on port : <span id="list-port"> <%= port %></span></p>
-                            </div>
-                        </div>
+                        <div class="connection-box">
+                            <form id="connect-form" method="post" action="/connect">
+                            <input type="text" name="host" placeholder="Host ip" id="host-ip-input" required>
+                            <input type="text" name="code" id="host-code-input" placeholder="Connection code" required>
+                            <button id="connect-btn" type="submit">Connect</button>
+                        </form>
                     </div>
                 </div>
                 
@@ -136,7 +128,7 @@
                 <div id="host">
                     <div id="host-box">
                         <div class="title"><h1>Server</h1></div>
-                        <div class="client-info">
+                        <div class="dash-box">
                             <h4>Infos</h4>
                             <div class="info-col1">
                                 <p>Name : <span><%= hostname %></span></p>
@@ -146,7 +138,7 @@
                             <div class="info-coll2">
                                 <p>Status : <span id="serverst" class="status">Not running</span></p>
                                 <p>Connected to : <span id="host-target">None</span></p>
-                                <p>Listening on port : <span id="list-port"> <%= port %></span></p>
+                                <p>Listening on port : <span id="list-port"></span></p>
                             </div>
                         </div>
                     </div>
