@@ -2,6 +2,38 @@ import express from 'express';
 import WinReg from 'winreg';
 import os from 'os';
 import https from 'https';
+import { exec } from "child_process";
+
+async function detectMSFSVersion(path) {
+    return new Promise((resolve) => {
+        const ps = `
+        $paths = @(
+            ${new String(path)}
+        )
+
+        $appx = Get-AppxPackage -Name "*flight*" | Select-Object -First 1
+        if ($appx) {
+            $paths += (Join-Path $appx.InstallLocation "FlightSimulator.exe")
+        }
+
+        foreach ($p in $paths) {
+            if (Test-Path $p) {
+                (Get-Item $p).VersionInfo.FileVersion
+                exit
+            }
+        }
+
+        "Not installed"
+        `;
+
+        exec(`powershell -command "${ps}"`, (err, stdout) => {
+            if (err) return resolve("Unknown");
+            resolve(stdout.trim());
+        });
+    });
+}
+
+
 
 const app = express();
 
@@ -16,7 +48,6 @@ async function detectLocalIp(type = "lan") {
         for (const name in nets) {
             for (const net of nets[name]) {
                 if (net.family === "IPv4" && !net.internal && !net.address.startsWith("100.")) {
-                    // Exclude Tailscale IPs (100.x.x.x)
                     return (net.address + '/lan');
                 }
             }
@@ -27,8 +58,7 @@ async function detectLocalIp(type = "lan") {
         for (const name in nets) {
             for (const net of nets[name]) {
                 if (net.family === "IPv4" && !net.internal && net.address.startsWith("100.")) {
-                    // Tailscale assigns 100.x.x.x addresses
-                    return (net.address + '/taiscale');
+                    return (net.address + '/tailscale');
                 }
             }
         }
@@ -61,33 +91,21 @@ let mfsVersion = "Unknown";
 
 
 if (platform === "win32") {
-    const regKey = new WinReg({
-        hive: WinReg.HKLM,
-        key: '\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Microsoft.FlightSimulator'
-    });
-
-    regKey.get('DisplayVersion', (err, item) => {
-        if (err) {
-            console.error('Error reading registry:', err.message);
-        } else {
-            mfsVersion = item.value;
-            console.log('MSFS Version:', mfsVersion);
-        }
-    });
+    mfsVersion = await detectMSFSVersion()
 } else {
     mfsVersion = "Unsupported OS";
 }
 
 
+
 let currentStatus = {
-    ip: detectLocalIp(),
+    ip: await detectLocalIp(),
     timestamp: Date.now()
 };
 
 setInterval(async () => {
     currentStatus.ip = await detectLocalIp("net");
     currentStatus.timestamp = Date.now();
-    console.log("Updated IP:", currentStatus.ip);
 }, 5000);
 
 
