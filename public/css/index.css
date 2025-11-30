@@ -1,10 +1,10 @@
+/*###################### ROOT VARIABLES #######################*/
 :root {
     --black: hsl(240, 9%, 5%);
     --black-100: hsl(240, 9%, 10%);
     --black-200: hsl(240, 9%, 20%);
     --black-300: hsl(240, 9%, 30%);
     --black-400: hsl(240, 9%, 40%);
-
 
     --grey-50: hsl(240, 9%, 95%);
     --grey-100: hsl(240, 9%, 85%);
@@ -15,19 +15,16 @@
     --grey-300: hsl(240, 9%, 20%);
     --grey-400: hsl(240, 9%, 15%);
 
-
     --white: hsl(0, 0%, 100%);
     --white-100: hsl(0, 0%, 98%);
     --white-200: hsl(0, 0%, 94%);
     --white-300: hsl(0, 0%, 90%);
     --white-400: hsl(0, 0%, 85%);
 
-
     --blue: hsl(210, 80%, 55%);
     --blue-dark: hsl(210, 80%, 40%);
     --red: hsl(0, 70%, 55%);
     --green: hsl(120, 60%, 45%);
-
 
     --font: monospace, Arial;
     --padd-10: 3rem;
@@ -35,6 +32,7 @@
     --padd-1: 0.5rem;
 }
 
+/*###################### DARK MODE VARIABLES #######################*/
 .darkmode {
     --black: hsl(240, 9%, 95%);
     --black-100: hsl(240, 9%, 90%);
@@ -63,6 +61,7 @@
     --green: hsl(120, 60%, 55%);
 }
 
+/*###################### GLOBALS & TRANSITIONS #######################*/
 * {
     transition: background-color 0.3s, color 0.3s, border-color 0.3s, filter 0.3s, stroke 0.3s , fill 0.3s;
 }
@@ -74,6 +73,7 @@ body {
     font-family: var(--font);
 }
 
+/*###################### LAYOUT: CONTAINER & GRID #######################*/
 #container {
     background-color: var(--white-100);
     font-family: var(--font);
@@ -85,6 +85,7 @@ body {
     grid-template-columns: 1fr 3.5fr;
 }
 
+/*###################### NAVIGATION: WRAPPER #######################*/
 nav {
     z-index: 5;
     background-color: var(--white-200);
@@ -112,7 +113,7 @@ nav {
     margin-bottom: var(--padd-5);
 }
 
-
+/*###################### NAVIGATION: BUTTONS #######################*/
 nav .btn {
     padding: var(--padd-1);
     width: auto ;
@@ -139,14 +140,13 @@ nav .btn:active {
 nav .btn a {
     font-weight: 300;
     color: var(--black);
-
 }
 
 .active {
     background-color: var(--grey-200ts);
 }
 
-
+/*###################### LOGO #######################*/
 #logo {
     width: 100%;
     margin: 3px;
@@ -157,20 +157,20 @@ nav .btn a {
     width: 93%;
 }
 
-
-
+/*###################### CANVAS #######################*/
 #canvas {
     border: solid 2px var(--grey-100ts);
     margin: 0 var(--padd-1);
     background-color: var(--white-100);
 }
 
-
+/*###################### SVG ICONS #######################*/
 nav svg {
     height: 24px;
     width: 24px;
 }
 
+/*###################### MODE BUTTON #######################*/
 #modebtn {
     width: auto ;
     padding:8px;
@@ -207,8 +207,7 @@ nav svg {
     display: none;
 }
 
-
-
+/*###################### DARK MODE: ICONS & LOGO #######################*/
 .darkmode svg {
     stroke: white;
     color: white;
@@ -220,7 +219,7 @@ nav svg {
     filter: invert(1) brightness(2);
 }
 
-
+/*###################### SETTINGS PANEL #######################*/
 #settings {
     background-color: var(--white-200);
     border: solid 3px var(--grey-100ts);
@@ -232,7 +231,7 @@ nav svg {
     top: 50%;
     left: 50%;
     transform: translate(-30%, -50%);
-    z-index: 20;
+    z-index: -10;
     opacity: 0;
     overflow-y: auto;
     transition: 0.5s ease-in-out;
@@ -242,6 +241,7 @@ nav svg {
     color: var(--black);
 }
 
+/*###################### OVERLAY #######################*/
 #overlay {
     display: none;
     position: absolute;
@@ -249,12 +249,13 @@ nav svg {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(33, 33, 33, 0.3);
     z-index: 10;
     opacity: 0;
     transition: 0.5s ease-in-out;
 }
- 
+
+/*###################### SETTINGS: TOP / MIDDLE / BOTTOM #######################*/
 .settings-top {
     display: flex;
     align-items: center;
@@ -281,7 +282,7 @@ nav svg {
     padding-top: var(--padd-1);
 }
 
-
+/*###################### SAVE SETTINGS BUTTON #######################*/
 #saveSettings {
     border-radius: 10px;
     border: none;
@@ -303,4 +304,296 @@ nav svg {
 
 #saveSettings:active {
     scale: 0.97;
+}
+
+/*###################### DASHBOARD #######################*/
+#dashboard {
+    width: 95%;
+    height: 90%;
+    margin: var(--padd-5);
+    padding-top: 2.75rem;
+    transition: 0.4s ease-in-out;
+}
+
+/*###################### DASHBTN (CLIENT/SERVER SWITCH) #######################*/
+#dashbtn {
+    position: absolute;
+    top: 20px; 
+    right: 20px;
+    width: 140px;
+    height: 25px;
+    border-radius: 10px;
+    display: flex;
+    background-color: var(--black-300);
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    padding: 2px 6px;
+    align-items: center;
+}
+
+#dashbtn span {
+    flex: 1;
+    text-align: center;
+    z-index: 2;
+    font-weight: 500;
+    color: var(--white-400);
+    transition: color 0.3s;
+}
+
+#dashbtn .slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: var(--black);
+    border-radius: 10px;
+    z-index: 1;
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* overshoot */
+}
+
+#dashbtn.active span:first-child {
+    color: var(--white)
+}
+
+/*###################### CLIENT BOX #######################*/
+
+#client {
+    display: grid;
+    width: 100%;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+}
+
+#client-box {
+    background-color: var(--white-200);
+    border: 2px solid var(--grey-100ts);
+    border-radius: var(--padd-5);
+    padding: var(--padd-5);
+    margin-top: var(--padd-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--padd-5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    position: relative; 
+    width: 100%;
+}
+
+#client-box .title {
+    position: absolute;
+    top: -3rem;
+    left: -0.33rem;
+    padding: 0 0.5rem;
+    z-index: 1;
+}
+
+#client-box .title h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--black-200);
+}
+
+.client-info {
+    display: flex;
+    gap: var(--padd-5);
+    flex-wrap: wrap;
+    padding-top: var(--padd-5);
+}
+
+.client-info h4 {
+    margin: 0;
+    margin-top: calc(var(--padd-5) / -1 - 0.25rem);
+    padding-bottom: var(--padd-1);
+    font-size: 1.1rem;
+    color: var(--black-200);
+}
+
+.info-col1, .info-coll2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-col1 {
+    border-right: 2px solid var(--grey-200ts);
+    padding-right: var(--padd-1);
+}
+
+.info-coll2 {
+    padding-left: var(--padd-3);
+}
+
+.status {
+    color: var(--red) !important;
+}
+
+.info-col1 p, .info-coll2 p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--black-300);
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+
+.info-col1 p span, .info-coll2 p span {
+    font-weight: bold;
+    color: var(--black-200);
+    min-width: 80px; 
+}
+
+/*###################### DARKMODE: CLIENT BOX STYLES #######################*/
+.darkmode #client-box {
+    background-color: var(--white-200);
+    border-color: var(--grey-200ts);
+}
+
+.darkmode #client-box .title h1,
+.darkmode .client-info h4,
+.darkmode .info-col1 p span,
+.darkmode .info-coll2 p span {
+    color: var(--black-200);
+}
+
+.darkmode .info-col1 p,
+.darkmode .info-coll2 p {
+    color: var(--black-300);
+}
+
+/*###################### LOCAL IP STYLING #######################*/
+.localIp {
+    width: fit-content;
+    height: fit-content;
+    filter: blur(0.3rem);
+    cursor: pointer;
+}
+
+.localIp.blurrable {
+    filter: blur(0.3rem);
+    cursor: pointer;
+}
+
+.localIp.no-blur {
+    filter: none;
+    cursor: default;
+    color: var(--red) !important;
+    font-style: italic;
+}
+
+
+/*###################### HOST WRAPPER (hidden by default) #######################*/
+#host {
+    display: none;
+    width: 100%;
+}
+
+/*###################### HOST BOX #######################*/
+#host-box {
+    background-color: var(--white-200);
+    border: 2px solid var(--grey-100ts);
+    border-radius: var(--padd-5);
+    padding: var(--padd-5);
+    margin-top: var(--padd-5);
+    flex-direction: column;
+    gap: var(--padd-5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+    width: 100%;
+
+}
+
+#host-box .title {
+    position: absolute;
+    top: -3rem;
+    left: -0.33rem;
+    padding: 0 0.5rem;
+    z-index: 1;
+}
+
+#host-box .title h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--black-200);
+}
+
+.darkmode #host-box .title h1 {
+    color: var(--black-200);
+}
+
+/*###################### TOAST / NOTIFICATION #######################*/
+
+
+#toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--white-300);
+    border: 1px solid var(--grey-100ts);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: var(--font);
+    color: var(--black);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    min-width: 250px;
+    max-width: 350px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 9999;
+}
+
+#toast.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+#toast .message {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+#toast .icon {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#toast .icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+#toast h6 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--black-200);
+}
+
+#toast a {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--black-300);
+    text-decoration: none;
+    margin-top: 0.25rem;
+}
+
+
+.darkmode #toast svg {
+    filter: invert(0) !important;
 }
