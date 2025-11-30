@@ -1,6 +1,7 @@
 import express from 'express';
 import WinReg from 'winreg';
 import os from 'os';
+import https from 'https';
 
 const app = express();
 
@@ -8,15 +9,42 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.static('public'));
 
-function detectLocalIp() {
+async function detectLocalIp(type = "lan") {
     const nets = os.networkInterfaces();
-    for (const name in nets) {
-        for (const net of nets[name]) {
-            if (net.family === "IPv4" && !net.internal) {
-                return net.address;
+
+    if (type === "lan") {
+        for (const name in nets) {
+            for (const net of nets[name]) {
+                if (net.family === "IPv4" && !net.internal && !net.address.startsWith("100.")) {
+                    // Exclude Tailscale IPs (100.x.x.x)
+                    return (net.address + '/lan');
+                }
             }
         }
     }
+
+    if (type === "tailscale") {
+        for (const name in nets) {
+            for (const net of nets[name]) {
+                if (net.family === "IPv4" && !net.internal && net.address.startsWith("100.")) {
+                    // Tailscale assigns 100.x.x.x addresses
+                    return (net.address + '/taiscale');
+                }
+            }
+        }
+    }
+
+    
+    if (type === "net") {
+        return new Promise((resolve, reject) => {
+            https.get("https://api.ipify.org", (res) => {
+                let data = "";
+                res.on("data", chunk => data += chunk);
+                res.on("end", () => resolve(data + "/net"));
+            }).on("error", err => reject({ ip: "Connection error", type }));
+        });
+    }
+
     return "Connection error";
 }
 
@@ -56,8 +84,8 @@ let currentStatus = {
     timestamp: Date.now()
 };
 
-setInterval(() => {
-    currentStatus.ip = detectLocalIp();
+setInterval(async () => {
+    currentStatus.ip = await detectLocalIp("net");
     currentStatus.timestamp = Date.now();
     console.log("Updated IP:", currentStatus.ip);
 }, 5000);
@@ -66,7 +94,8 @@ app.get('/', (req,res) => {
     res.render('index', {
         hostname,
         localip: currentStatus.ip,
-        mfsVersion
+        mfsVersion,
+        port : "0000"
     });
 });
 
