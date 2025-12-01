@@ -1,31 +1,19 @@
-import ctypes
-import time
+from simconnect_mobiflight import SimConnectMobiFlight
+from mobiflight_variable_requests import MobiFlightVariableRequests
+from time import sleep
 
-# Load SimConnect.dll
-simconnect = ctypes.windll.LoadLibrary("SimConnect.dll")
+sm = SimConnectMobiFlight()
+vr = MobiFlightVariableRequests(sm)
+vr.clear_sim_variables()
 
-# Define constants
-SIMCONNECT_CLIENT_DATA_TYPE_LVAR = 0  # L:Var data type
-
-# Open connection
-hSimConnect = ctypes.c_void_p()
-result = simconnect.SimConnect_Open(ctypes.byref(hSimConnect), b"PythonLVar", 0, None, 0)
-if result != 0:
-    print("SimConnect connection failed")
-    exit(1)
-
-# Helper: Read L:Var
-def get_lvar(name: str):
-    buffer = ctypes.c_double()
-    size = ctypes.c_uint32(ctypes.sizeof(buffer))
-    # Use SimConnect_TransmitClientEvent/SimConnect_RequestData for L:Var
-    # (You can use SimConnect_RequestClientData + L:Var name)
-    # This requires more ctypes boilerplate (callbacks, events)
-    # For simplicity, use third-party lib: https://github.com/cboulay/py-simconnect
-    return 0  # placeholder
+# Example write variable
+vr.set("0 (>L:A32NX_COCKPIT_DOOR_LOCKED)")
 
 while True:
-    # This is the part where you request L:Var value
-    val = get_lvar("A32NX_GEAR_LEVER_POSITION")
-    print("Gear handle:", val)
-    time.sleep(0.2)
+    alt_ground = vr.get("(A:GROUND ALTITUDE,Meters)")
+    alt_plane = vr.get("(A:PLANE ALTITUDE,Feet)")
+    # FlyByWire A320
+    ap1 = vr.get("(L:A32NX_AUTOPILOT_1_ACTIVE)")
+    hdg = vr.get("(L:A32NX_AUTOPILOT_HEADING_SELECTED)")
+    mode = vr.get("(L:A32NX_FMA_LATERAL_MODE)")
+    sleep(1)

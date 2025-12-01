@@ -201,3 +201,10 @@ function toast(title, text, level = 2, time = 3000) {
 
 let port = localStorage.getItem('port') || '0000';
 document.getElementById('list-port').textContent = port;
+
+
+
+
+document.getElementById('host-code-input').addEventListener('input', (el) => {
+    el.
+})

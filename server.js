@@ -4,36 +4,6 @@ import os from 'os';
 import https from 'https';
 import { exec } from "child_process";
 
-async function detectMSFSVersion(path) {
-    return new Promise((resolve) => {
-        const ps = `
-        $paths = @(
-            ${new String(path)}
-        )
-
-        $appx = Get-AppxPackage -Name "*flight*" | Select-Object -First 1
-        if ($appx) {
-            $paths += (Join-Path $appx.InstallLocation "FlightSimulator.exe")
-        }
-
-        foreach ($p in $paths) {
-            if (Test-Path $p) {
-                (Get-Item $p).VersionInfo.FileVersion
-                exit
-            }
-        }
-
-        "Not installed"
-        `;
-
-        exec(`powershell -command "${ps}"`, (err, stdout) => {
-            if (err) return resolve("Unknown");
-            resolve(stdout.trim());
-        });
-    });
-}
-
-
 
 const app = express();
 
@@ -91,9 +61,9 @@ let mfsVersion = "Unknown";
 
 
 if (platform === "win32") {
-    mfsVersion = await detectMSFSVersion()
+    mfsVersion = "not implemented"  
 } else {
-    mfsVersion = "Unsupported OS";
+    mfsVersion = `Unsupported OS (${platform})`;
 }
 
 
