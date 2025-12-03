@@ -658,7 +658,7 @@ nav svg {
 
 .connection-box input:focus {
     border-color: var(--blue);
-    box-shadow: 0 0 8px var(--blue-dark);
+    box-shadow: 0 0 10px var(--blue-dark);
 }
 
 .connection-box button {
@@ -679,5 +679,6 @@ nav svg {
 
 .connection-box button:active {
     transform: translateY(1px);
+    scale: 1.01;
 }
 

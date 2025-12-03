@@ -201,3 +201,49 @@ function toast(title, text, level = 2, time = 3000) {
 
 let port = localStorage.getItem('port') || '0000';
 document.getElementById('list-port').textContent = port;
+
+
+
+
+document.getElementById('host-code-input').addEventListener('input', (el) => {
+    const inputEl = document.getElementById('host-code-input');
+    const preserveSelection = (el, oldVal, newVal, oldStart, oldEnd) => {
+        const prefixOld = oldVal.slice(0, oldStart);
+        const prefixNew = newVal.slice(0, prefixOld.length);
+        const newStart = Math.min(newVal.length, prefixNew.length);
+        el.setSelectionRange(newStart, newStart);
+    };
+
+    inputEl.addEventListener('input', (e) => {
+        const el = e.target;
+        const oldVal = el.value;
+        const oldStart = el.selectionStart;
+        const oldEnd = el.selectionEnd;
+
+        const newVal = oldVal.toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+        if (newVal !== oldVal) {
+            el.value = newVal;
+            preserveSelection(el, oldVal, newVal, oldStart, oldEnd);
+        }
+    });
+});
+
+const ipInput = document.getElementById('host-ip-input');
+
+ipInput.addEventListener('input', (e) => {
+    const el = e.target;
+    const oldVal = el.value;
+    const oldPos = el.selectionStart;
+
+    const newVal = oldVal.replace(/[^0-9.]/g, '');
+
+    if (newVal !== oldVal) {
+        const prefixOld = oldVal.slice(0, oldPos);
+        const allowedBefore = prefixOld.replace(/[^0-9.]/g, '').length;
+        const newPos = Math.min(allowedBefore, newVal.length);
+
+        el.value = newVal;
+        el.setSelectionRange(newPos, newPos);
+    }
+});
