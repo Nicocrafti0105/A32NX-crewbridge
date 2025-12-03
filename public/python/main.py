@@ -1,19 +1,52 @@
-from simconnect_mobiflight import SimConnectMobiFlight
-from mobiflight_variable_requests import MobiFlightVariableRequests
+from backend.simconnect_mobiflight import SimConnectMobiFlight
+from backend.mobiflight_variable_requests import MobiFlightVariableRequests
 from time import sleep
+import keyboard
 
-sm = SimConnectMobiFlight()
-vr = MobiFlightVariableRequests(sm)
-vr.clear_sim_variables()
+class MobiflightClient:
+    def __init__(self):
+        self.sm = SimConnectMobiFlight()
+        self.vr = MobiFlightVariableRequests(self.sm)
+        self.vr.clear_sim_variables()
 
-# Example write variable
-vr.set("0 (>L:A32NX_COCKPIT_DOOR_LOCKED)")
+    def add_var(self, var_string: str):
+        cmd = f"MF.SimVars.Add.({var_string})"
+        self.vr.set(cmd)
 
-while True:
-    alt_ground = vr.get("(A:GROUND ALTITUDE,Meters)")
-    alt_plane = vr.get("(A:PLANE ALTITUDE,Feet)")
-    # FlyByWire A320
-    ap1 = vr.get("(L:A32NX_AUTOPILOT_1_ACTIVE)")
-    hdg = vr.get("(L:A32NX_AUTOPILOT_HEADING_SELECTED)")
-    mode = vr.get("(L:A32NX_FMA_LATERAL_MODE)")
-    sleep(1)
+    def read(self, var_string: str):
+        return self.vr.get(f"({var_string})")
+    
+
+    def write(self, var_or_event_string: str, value=None):
+        if value is None:
+            cmd = f"({var_or_event_string})"
+        elif isinstance(value, str) and ':' in value:
+            vtype, vval = value.split(':', 1)
+            vtype = vtype.lower()
+            vval = vval.strip().upper()
+            match vtype:
+                case "bool":
+                    cmd_value = 1 if vval in ("UP", "ON", "TRUE", "1") else -1 if vval in ("DOWN", "OFF", "FALSE", "0") else None
+                case "signal":
+                    cmd_value = 1 if vval in ("UP", "1") else -1 if vval in ("DOWN", "0") else None
+                case "int":
+                    try: cmd_value = int(vval)
+                    except ValueError: raise ValueError(f"Invalid int value: {vval}")
+                case "float":
+                    try: cmd_value = float(vval)
+                    except ValueError: raise ValueError(f"Invalid float value: {vval}")
+                case _:
+                    raise ValueError(f"Unsupported type: {vtype}")
+            if cmd_value is None:
+                raise ValueError(f"Invalid {vtype} value: {vval}")
+            cmd = f"{cmd_value} (>{var_or_event_string})"
+        else:
+            cmd = f"{value} (>{var_or_event_string})"
+        print(f"Sending command: {cmd}")
+        self.vr.set(cmd)
+
+
+client = MobiflightClient()
+
+client.write("L:A32NX_GEAR_LEVER_POSITION_REQUEST",'signal:DOWN')
+print(client.read("_AUTOPILOT_APPR_MODE"))
